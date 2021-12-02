@@ -24,23 +24,22 @@ jobs:
         include:
           - python-version: "3.5"
             site: "wikipedia:nb"
-            experimental: false          
+            experimental: false
           - python-version: "3.7"
             site: "wikipedia:test"
-            experimental: false          
+            experimental: false
           - python-version: "3.7"
             site: "wikidata:test"
-            experimental: false          
+            experimental: false
           - python-version: "3.9"
             site: "wiktionary:ar"
-            experimental: false          
-          - python-version: "3.6"
-            experimental: false          
+            experimental: false
+          - python-version: "3.6"         
             site: "wikidata:wikidata"
-            experimental: false          
-          - python-version: "3.8"       
+            experimental: false
+          - python-version: "3.8"    
             site: "wowwiki:uk"
-            experimental: false          
+            experimental: false
 
     steps:
     - uses: actions/checkout@v2
