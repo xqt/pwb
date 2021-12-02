@@ -14,11 +14,13 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+    continue-on-error: ${{ matrix.experimental }}
     strategy:
       fail-fast: false
       matrix:
         python-version: ["3.5", "3.6", "3.7", "3.8", "3.9", "3.10", "pypy3"]
         site: ["wikipedia:en", "wikisource:zh"]
+        experimental: [false]
         include:
           - python-version: "3.5"
             site: "wikipedia:nb"
@@ -51,7 +53,7 @@ jobs:
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
         pip install wikitextparser
         python -c "import setuptools; print('setuptools:', setuptools.__version__)"
-    - name: generate user files
+    - name: Generate user files
       run: |
         python -Werror::UserWarning -m pwb generate_user_files -site:${{matrix.site}} -v -debug
         echo "max_retries = 3" >> user-config.py
