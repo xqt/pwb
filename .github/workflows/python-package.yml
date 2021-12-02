@@ -24,7 +24,7 @@ jobs:
         include:
           - python-version: "3.5"
             site: "wikipedia:nb"
-            experimental: false
+            experimental: true
           - python-version: "3.7"
             site: "wikipedia:test"
             experimental: false
@@ -39,7 +39,7 @@ jobs:
             experimental: false
           - python-version: "3.8"    
             site: "wowwiki:uk"
-            experimental: false
+            experimental: true
 
     steps:
     - uses: actions/checkout@v2
