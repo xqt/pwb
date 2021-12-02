@@ -19,6 +19,20 @@ jobs:
       matrix:
         python-version: ["3.5", "3.6", "3.7", "3.8", "3.9", "3.10", "pypy3"]
         site: ["wikipedia:en", "wikisource:zh"]
+        include:
+          - python-version: "3.5"
+            site: "wikipedia:nb"
+          - python-version: "3.7"
+            site: "wikipedia:test"
+          - python-version: "3.7"
+            site: "wikidata:test"
+          - python-version: "3.9"
+            site: "wiktionary:ar"
+          - python-version: "3.6"
+            site: "wikidata:wikidata"
+          - python-version: "3.8"
+            site: "wowwiki:uk"
+            experimental: true
 
     steps:
     - uses: actions/checkout@v2
@@ -36,7 +50,7 @@ jobs:
         if [ -f dev-requirements.txt ]; then pip install -r dev-requirements.txt; fi
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
         pip install wikitextparser
-        python -c "import setuptools; print(setuptools.__version__)"
+        python -c "import setuptools; print('setuptools:', setuptools.__version__)"
     - name: generate user files
       run: |
         python -Werror::UserWarning -m pwb generate_user_files -site:${{matrix.site}} -v -debug
