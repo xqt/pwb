@@ -22,9 +22,6 @@ jobs:
         site: ["wikipedia:en"]
         experimental: [false]
         include:
-          - python-version: "3.5"
-            site: "wikipedia:nb"
-            experimental: true
           - python-version: "3.7"
             site: "wikipedia:test"
             experimental: false
