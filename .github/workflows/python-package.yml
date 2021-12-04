@@ -28,9 +28,6 @@ jobs:
           - python-version: "3.7"
             site: "wikidata:test"
             experimental: false
-          - python-version: "3.9"
-            site: "wiktionary:ar"
-            experimental: false
           - python-version: "3.6"         
             site: "wikidata:wikidata"
             experimental: false
