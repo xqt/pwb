@@ -18,7 +18,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: ["3.5", "3.11"]
+        python-version: ["3.5", "3.11.0-alpha.2"]
         site: ["wikipedia:en"]
         experimental: [false]
         include:
