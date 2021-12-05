@@ -20,6 +20,7 @@ jobs:
       matrix:
         python-version: ["3.5", "3.11.0-alpha.2"]
         site: ["wikipedia:en"]
+        experimental: [False]
         include:
           - python-version: "3.7"
             site: "wikipedia:test"
