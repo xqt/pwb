@@ -27,20 +27,16 @@ jobs:
         include:
           - python-version: "3.7"
             site: "wikipedia:test"
-            experimental: false
           - python-version: "3.7"
             site: "wikidata:test"
-            experimental: false
           - python-version: "3.9"
             site: "wiktionary:ar"
-            experimental: false
-            env_no_rc: true
+            test_no_rc: 1
           - python-version: "3.6"
             site: "wikidata:wikidata"
-            experimental: false
           - python-version: "3.8"
             site: "wowwiki:uk"
-            experimental: false
+            experimental: true
           - python-version: "3.11.0-alpha.2"
             site: "wikipedia:test"
             experimental: true
@@ -75,7 +71,7 @@ jobs:
     - name: Test with unittest
       env:
         PYWIKIBOT_TEST_NO_RC: |
-          ${{ (matrix.site == 'wikisource:zh' || matrix.env_no_rc) && 1 || 0 }}
+          ${{ (matrix.site == 'wikisource:zh' || matrix.test_no_rc) && 1 || 0 }}
       run: |
-        python pwb.py version
-        coverage run -m unittest discover -vv -p \"*_tests.py\";
+        python pwb version
+        coverage run -m unittest discover -vv -p \"*_tests.py\"
