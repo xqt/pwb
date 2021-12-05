@@ -77,7 +77,7 @@ jobs:
       env:
         # Always set PYWIKIBOT_TEST_NO_RC=1 for wikisource:zh matrix entries
         PYWIKIBOT_TEST_NO_RC: |
-          if [ ${{matrix.site}} == "wikisource:zh" ]; then 1; else ${{matrix.env_no_rc}}; fi
+          eval(if [ ${{matrix.site}} == "wikisource:zh" ]; then 1; else ${{matrix.env_no_rc}}; fi)
       run: |
         echo PYWIKIBOT tests environment variables:
         echo PYWIKIBOT_TESTS_RUNNING = $PYWIKIBOT_TESTS_RUNNING
