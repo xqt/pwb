@@ -76,7 +76,7 @@ jobs:
     - name: Test with unittest
       # if: false #${{matrix.site}} == "wikisource:zh" || ${{matrix.enc_no_rc}} == 1
       env:
-        PYWIKIBOT_TEST_NO_RC: ${{ 1 && startsWith(matrix.site, 'wikisource') }}
+        PYWIKIBOT_TEST_NO_RC: ${{ startsWith(matrix.site, 'wikisource') && 1 }}
       run: |
         echo PYWIKIBOT tests environment variables:
         echo PYWIKIBOT_TESTS_RUNNING = $PYWIKIBOT_TESTS_RUNNING
