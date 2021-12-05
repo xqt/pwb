@@ -74,12 +74,9 @@ jobs:
         echo "console_encoding = 'utf8'" >> user-config.py
 
     - name: Test with unittest
-      # if: false #${{matrix.site}} == "wikisource:zh" || ${{matrix.enc_no_rc}} == 1
       env:
-        PYWIKIBOT_TEST_NO_RC: ${{ startsWith(matrix.site, 'wikisource') && 1 || 0 }}
+        PYWIKIBOT_TEST_NO_RC: |
+          ${{ (matrix.site == 'wikisource' || {matrix.enc_no_rc == 1) && 1 || 0 }}
       run: |
-        echo PYWIKIBOT tests environment variables:
-        echo PYWIKIBOT_TESTS_RUNNING = $PYWIKIBOT_TESTS_RUNNING
-        echo PYWIKIBOT_TEST_NO_RC = $PYWIKIBOT_TEST_NO_RC
         python pwb.py version
         # coverage run -m unittest discover -vv -p \"*_tests.py\";
