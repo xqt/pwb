@@ -65,11 +65,8 @@ jobs:
         echo "maximum_GET_length = 5000" >> user-config.py
         echo "console_encoding = 'utf8'" >> user-config.py
     - name: Test with unittest
+      env:
+        PYWIKIBOT_TEST_NO_RC: if [[${{matrix.site}} == "wikisource:zh"]]; then 1; else; ${{matrix.env_no_rc}}; fi
       run: |
         coverage run -m unittest discover -vv -p \"*_tests.py\"
-      env:
-        if [[${{matrix.site}} == "wikisource:zh"]]; then
-          PYWIKIBOT_TEST_NO_RC: 1
-        else
-          PYWIKIBOT_TEST_NO_RC: ${{matrix.env_no_rc}}
-        fi
+
