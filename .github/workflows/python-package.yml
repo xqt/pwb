@@ -78,7 +78,7 @@ jobs:
           ${{ (matrix.site == 'wikisource:zh' || matrix.env_no_rc) && 1 || 0 }}
       run: |
         python pwb.py version
-        if {{matrix.site == "wowwiki:uk"}}; then
+        if ${{matrix.site}} == "wowwiki:uk"; then
           pwb
         fi
         # coverage run -m unittest discover -vv -p \"*_tests.py\";
