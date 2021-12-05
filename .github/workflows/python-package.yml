@@ -74,7 +74,7 @@ jobs:
         echo "console_encoding = 'utf8'" >> user-config.py
 
     - name: Test with unittest
-      if: ${{matrix.site}} == "wikisource:zh" || ${{matrix.enc_no_rc}} == 1
+      if: false #${{matrix.site}} == "wikisource:zh" || ${{matrix.enc_no_rc}} == 1
       env:
         PYWIKIBOT_TEST_NO_RC: 1
       run: |
