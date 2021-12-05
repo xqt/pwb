@@ -79,8 +79,9 @@ jobs:
         PYWIKIBOT_TEST_NO_RC: |
           if [ ${{matrix.site}} == "wikisource:zh" ]; then 1; else ${{matrix.env_no_rc}}; fi
       run: |
-        echo "PYWIKIBOT tests environment variables:"
-        echo PYWIKIBOT_TESTS_RUNNING
-        echo PYWIKIBOT_TEST_NO_RC
-        if PYWIKIBOT_TEST_NO_RC:
-        coverage run -m unittest discover -vv -p \"*_tests.py\"
+        echo PYWIKIBOT tests environment variables:
+        echo PYWIKIBOT_TESTS_RUNNING = $PYWIKIBOT_TESTS_RUNNING
+        echo PYWIKIBOT_TEST_NO_RC = $PYWIKIBOT_TEST_NO_RC
+        if $PYWIKIBOT_TEST_NO_RC; then
+        coverage run -m unittest discover -vv -p \"*_tests.py\";
+        fi
