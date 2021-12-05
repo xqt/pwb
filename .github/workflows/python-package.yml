@@ -81,5 +81,5 @@ jobs:
         echo PYWIKIBOT tests environment variables:
         echo PYWIKIBOT_TESTS_RUNNING = $PYWIKIBOT_TESTS_RUNNING
         echo PYWIKIBOT_TEST_NO_RC = $PYWIKIBOT_TEST_NO_RC
-        pwb.py version
+        python pwb.py version
         # coverage run -m unittest discover -vv -p \"*_tests.py\";
