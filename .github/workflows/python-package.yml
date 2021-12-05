@@ -16,7 +16,7 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
-    continue-on-error: ${{ matrix.experimental }}
+    continue-on-error: ${{ matrix.experimental || false }}
 
     strategy:
       fail-fast: false
@@ -24,7 +24,6 @@ jobs:
       matrix:
         python-version: ["3.5", "pypy3"]
         site: ["wikipedia:en", "wikisource:zh"]
-        experimental: [false]
         include:
           - python-version: "3.7"
             site: "wikipedia:test"
