@@ -1369,9 +1369,11 @@ class RecentChangesTestCase(WikimediaDefaultSiteTestCase):
     @classmethod
     def setUpClass(cls):
         """Set up test class."""
-        print('>>>', cls.__name__, os.environ.get('PYWIKIBOT_TEST_NO_RC', '0'))
+        print('>>>', cls.__name__, os.environ.get('PYWIKIBOT_TEST_NO_RC', '0') == '1')
         if os.environ.get('PYWIKIBOT_TEST_NO_RC', '0') == '1':
             raise unittest.SkipTest('RecentChanges tests disabled.')
+        else:
+            print('<<<')
 
         super().setUpClass()
 
