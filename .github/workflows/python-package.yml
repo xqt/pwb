@@ -67,11 +67,16 @@ jobs:
         echo "max_retries = 3" >> user-config.py
         echo "maximum_GET_length = 5000" >> user-config.py
         echo "console_encoding = 'utf8'" >> user-config.py
-
-    - name: Test with unittest
+        
+    - name: Set environment variables
       env:
+        PYWIKIBOT_TESTS_RUNNING: 1
         PYWIKIBOT_TEST_NO_RC: 
           ${{ (matrix.site == 'wikisource:zh' || matrix.test_no_rc) && 1 || 0 }}
+      run: |
+        python pwb.py version
+
+    - name: Test with unittest
       run: |
         python pwb.py version
         coverage run -m unittest -v tests.pagegenerators_tests
