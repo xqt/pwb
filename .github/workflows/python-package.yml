@@ -70,7 +70,8 @@ jobs:
 
     - name: Test with unittest
       env:
-        PYWIKIBOT_TEST_NO_RC: ${{ (matrix.site == 'wikisource:zh' || matrix.test_no_rc) && 1 || 0 }}
+        PYWIKIBOT_TEST_NO_RC: 
+          ${{ (matrix.site == 'wikisource:zh' || matrix.test_no_rc) && 1 || 0 }}
       run: |
         python pwb.py version
         coverage run -m unittest -v tests.pagegenerators_tests
