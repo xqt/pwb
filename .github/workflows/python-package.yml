@@ -15,7 +15,7 @@ env:
 
 jobs:
   build:
-    runs-on: ${{ matrix.os || "ubuntu-latest" }}
+    runs-on: ${{ matrix.os || github.ubuntu-latest }}
     continue-on-error: ${{ matrix.experimental || false }}
 
     strategy:
