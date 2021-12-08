@@ -27,7 +27,8 @@ jobs:
         test_prod_only: [true]
         include:
           - python-version: "3.6"
-            site: "wpbeta:en"
+            family: wpbeta
+            code: en
           - python-version: "3.7"
             site: "wikipedia:test"
           - python-version: "3.7"
@@ -67,13 +68,17 @@ jobs:
     - name: Generate family files
       run: |
           python pwb.py generate_family_file https://wiki.musicbrainz.org/ musicbrainz n
-          if  [ ${{matrix.site}} == 'wpbeta:en' ]; then
-            python pwb.py generate_family_file http://en.wikipedia.beta.wmflabs.org/ wpbeta y
+          if  [ ${{matrix.family}} == wpbeta ]; then
+            python pwb.py generate_family_file http://${{matrix.code}}.wikipedia.beta.wmflabs.org/ wpbeta y
           fi
 
     - name: Generate user files
       run: |
-        python -Werror::UserWarning -m pwb generate_user_files -site:${{matrix.site}} -v -debug
+        if [ ${{matrix.site}} ]; then
+          python -Werror::UserWarning -m pwb generate_user_files -site:${{matrix.site}} -v -debug;
+        else
+          python -Werror::UserWarning -m pwb generate_user_files -family:${{matrix.family}} -lang:{{matrix:code}} -v -debug;
+        fi
         echo "max_retries = 3" >> user-config.py
         echo "maximum_GET_length = 5000" >> user-config.py
         echo "console_encoding = 'utf8'" >> user-config.py
