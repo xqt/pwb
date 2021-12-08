@@ -35,7 +35,7 @@ jobs:
             code: zh
             experimental: true
           - python-version: "3.5"
-            family: wsbeta:en
+            site: wsbeta:en
             experimental: true
           - python-version: "3.7"
             site: "wikipedia:test"
