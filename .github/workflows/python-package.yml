@@ -29,6 +29,14 @@ jobs:
           - python-version: "3.6"
             family: wpbeta
             code: en
+            experimental: true
+          - python-version: "3.6"
+            family: wpbeta
+            code: zh
+            experimental: true
+          - python-version: "3.5"
+            family: wsbeta:en
+            experimental: true
           - python-version: "3.7"
             site: "wikipedia:test"
           - python-version: "3.7"
@@ -67,11 +75,13 @@ jobs:
         
     - name: Generate family files
       run: |
-          python pwb.py generate_family_file https://wiki.musicbrainz.org/ musicbrainz n
           if  [ ${{matrix.family}} == wpbeta ]; then
             python pwb.py generate_family_file http://${{matrix.code}}.wikipedia.beta.wmflabs.org/ wpbeta y
           fi
-
+          if [ ${{matrix.site}} == 'wsbeta:en' ]; then
+            python pwb.py generate_family_file http://en.wikisource.beta.wmflabs.org/ wsbeta y
+          fi
+          
     - name: Generate user files
       run: |
         if [ ${{matrix.site}} ]; then
