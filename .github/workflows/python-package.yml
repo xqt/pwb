@@ -26,6 +26,8 @@ jobs:
         site: ["wikipedia:en", "wikisource:zh"]
         test_prod_only: [true]
         include:
+          - python-version: "3.6"
+            site: "wpbeta:en"
           - python-version: "3.7"
             site: "wikipedia:test"
           - python-version: "3.7"
@@ -61,6 +63,13 @@ jobs:
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
         pip install wikitextparser
         python -c "import setuptools; print('setuptools:', setuptools.__version__)"
+        
+    - name: Generate family file
+        run: |
+          python pwb.py generate_family_file https://wiki.musicbrainz.org/ musicbrainz n
+        if  {{matrix.site}} == 'wpbeta:en'}}:
+        run: |
+          python pwb.py generate_family_file http://en.wikipedia.beta.wmflabs.org/ wpbeta y
 
     - name: Generate user files
       run: |
@@ -68,13 +77,12 @@ jobs:
         echo "max_retries = 3" >> user-config.py
         echo "maximum_GET_length = 5000" >> user-config.py
         echo "console_encoding = 'utf8'" >> user-config.py
-        
+
     - name: Test with unittest
       env:
-        PYWIKIBOT_TESTS_RUNNING: 1
-        PYWIKIBOT_TEST_NO_RC: 
+        PYWIKIBOT_TEST_NO_RC:
           ${{ (matrix.site == 'wikisource:zh' || matrix.test_no_rc) && 1 || 0 }}
         PYWIKIBOT_TEST_PROD_ONLY: ${{ matrix.test_prod_only && 1 || 0 }}
       run: |
         python pwb.py version
-        coverage run -m unittest -v tests.pagegenerators_tests
+        coverage run -m unittest discover -vv -p \"*_tests.py\"
