@@ -40,7 +40,7 @@ jobs:
             site: "wikipedia:test"
             experimental: true
           - python-version: 3
-            site: "wikidata:de"
+            site: "wikipedia:de"
             os: macOS-latest
 
     steps:
