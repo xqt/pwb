@@ -41,6 +41,7 @@ jobs:
             site: "wikipedia:test"
           - python-version: "3.7"
             site: "wikidata:test"
+            os: macOS-latest
           - python-version: "3.9"
             site: "wiktionary:ar"
             test_no_rc: true
