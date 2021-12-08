@@ -15,7 +15,7 @@ env:
 
 jobs:
   build:
-    runs-on: if ${{ matrix.os }}; then; ${{ matrix.os }}; else ubuntu-latest; fi
+    runs-on: {{ matrix.os || fromJSON(ubuntu-latest) }}
     continue-on-error: ${{ matrix.experimental || false }}
 
     strategy:
