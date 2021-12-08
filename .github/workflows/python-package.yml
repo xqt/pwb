@@ -26,22 +26,8 @@ jobs:
         site: ["wikipedia:en", "wikisource:zh"]
         test_prod_only: [true]
         include:
-          - python-version: "3.6"
-            family: wpbeta
-            code: en
-            experimental: true
-          - python-version: "3.6"
-            family: wpbeta
-            code: zh
-            experimental: true
-          - python-version: "3.5"
-            site: wsbeta:en
-            experimental: true
-          - python-version: "3.7"
-            site: "wikipedia:test"
           - python-version: "3.7"
             site: "wikidata:test"
-            os: macOS-latest
           - python-version: "3.9"
             site: "wiktionary:ar"
             test_no_rc: true
@@ -53,6 +39,9 @@ jobs:
           - python-version: "3.11.0-alpha.2"
             site: "wikipedia:test"
             experimental: true
+          - python-version: 3
+            site: "wikidata:de"
+            os: macOS-latest
 
     steps:
     - uses: actions/checkout@v2
