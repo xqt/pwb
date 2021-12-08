@@ -65,11 +65,11 @@ jobs:
         python -c "import setuptools; print('setuptools:', setuptools.__version__)"
         
     - name: Generate family file
-        run: |
+      run: |
           python pwb.py generate_family_file https://wiki.musicbrainz.org/ musicbrainz n
-        if  {{matrix.site}} == 'wpbeta:en'}}:
-        run: |
-          python pwb.py generate_family_file http://en.wikipedia.beta.wmflabs.org/ wpbeta y
+          if  {{matrix.site}} == 'wpbeta:en'}}; then
+            python pwb.py generate_family_file http://en.wikipedia.beta.wmflabs.org/ wpbeta y
+          fi
 
     - name: Generate user files
       run: |
