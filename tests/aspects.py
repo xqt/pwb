@@ -71,7 +71,7 @@ class TestTimerMixin(unittest.TestCase):
 
     # Number of seconds each test may consume
     # before a note is added after the test.
-    test_duration_warning_interval = 10
+    test_duration_warning_interval = 1
 
     def setUp(self):
         """Set up test."""
