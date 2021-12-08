@@ -75,10 +75,10 @@ jobs:
         
     - name: Generate family files
       run: |
-          if  [ ${{matrix.family || "ignore"}} == wpbeta ]; then
+          if  [ ${{matrix.family || 0}} == wpbeta ]; then
             python pwb.py generate_family_file http://${{matrix.code}}.wikipedia.beta.wmflabs.org/ wpbeta y
           fi
-          if [ ${{matrix.site || "ignore"}} == 'wsbeta:en' ]; then
+          if [ ${{matrix.site || 0}} == 'wsbeta:en' ]; then
             python pwb.py generate_family_file http://en.wikisource.beta.wmflabs.org/ wsbeta y
           fi
           
