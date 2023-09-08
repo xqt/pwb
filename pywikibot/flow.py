@@ -267,7 +267,7 @@ class Topic(FlowPage):
             must be 'wikitext' or 'html')
         :return: The new reply to this topic's root post
         """
-         self.root.reply(content, content_format)
+        return self.root.reply(content, content_format)
 
     # Moderation
     def lock(self, reason: str) -> None:
