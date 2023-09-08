@@ -23,10 +23,11 @@ class OptionSet(MutableMapping):
     None and after setting it, any site (even None) will fail.
     """
 
-    def __init__(self, site=None,
+    def __init__(self,
+                 site: Optional[pywikibot.site.APISite] = None,
                  module: Optional[str] = None,
                  param: Optional[str] = None,
-                 dict: Optional[dict] = None) -> None:
+                 dict: Optional[Dict] = None) -> None:
         """
         Initializer.
 
@@ -36,10 +37,13 @@ class OptionSet(MutableMapping):
         :type site: pywikibot.site.APISite or None
         :param module: The module name which is used by paraminfo. (Ignored
             when site is None)
+        :type module: str or None
         :param param: The parameter name inside the module. That parameter must
             have a 'type' entry. (Ignored when site is None)
+        :type param: str or None
         :param dict: The initializing dict which is used for
             :py:obj:`from_dict`
+        :type dict: dict or None
         """
         self._site_set = False
         self._enabled = set()
@@ -167,12 +171,12 @@ class OptionSet(MutableMapping):
         """Remove the item by setting it to None."""
         self[name] = None
 
-    def __iter__(self):
+    def __iter__(self) -> Generator[str, None, None]:
         """Iterate over each enabled and disabled option."""
         yield from self._enabled
         yield from self._disabled
 
-    def api_iter(self):
+    def api_iter(self) -> Generator[str, None, None]:
         """Iterate over each option as they appear in the URL."""
         yield from self._enabled
         for disabled in self._disabled:
