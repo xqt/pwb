@@ -154,7 +154,7 @@ class Board(FlowPage):
 
                 count += 1
                 if count >= total:
-                    return
+                    return None
 
             continue_args = self._parse_url(data['links']['pagination'])
             data = self.site.load_topiclist(self, **continue_args)
