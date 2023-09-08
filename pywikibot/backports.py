@@ -5,7 +5,7 @@
 # Distributed under the terms of the MIT license.
 #
 import sys
-from typing import Any
+from typing import Any, Generator, Iterable, Tuple
 
 
 PYTHON_VERSION = sys.version_info[:3]
@@ -151,7 +151,8 @@ else:
 if PYTHON_VERSION < (3, 10) or SPHINX_RUNNING:
     from itertools import tee
 
-    def pairwise(iterable):
+    def pairwise(iterable: Iterable) -> Iterable[Tuple]:
+
         """Return successive overlapping pairs taken from the input iterable.
 
         .. seealso:: :python:`itertools.pairwise
@@ -168,7 +169,7 @@ else:
 
 # gh-98363
 if PYTHON_VERSION < (3, 12) or SPHINX_RUNNING:
-    def batched(iterable, n: int) -> Generator[tuple, None, None]:
+    def batched(iterable: Iterable, n: int) -> Generator[Tuple, None, None]:
         """Batch data from the *iterable* into tuples of length *n*.
 
         .. note:: The last batch may be shorter than *n*.
