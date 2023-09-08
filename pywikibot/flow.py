@@ -154,7 +154,7 @@ class Board(FlowPage):
 
                 count += 1
                 if count >= total:
-                    return
+                    return None
 
             continue_args = self._parse_url(data['links']['pagination'])
             data = self.site.load_topiclist(self, **continue_args)
@@ -267,7 +267,7 @@ class Topic(FlowPage):
             must be 'wikitext' or 'html')
         :return: The new reply to this topic's root post
         """
-        return self.root.reply(content, content_format)
+         self.root.reply(content, content_format)
 
     # Moderation
     def lock(self, reason: str) -> None:
