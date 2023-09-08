@@ -52,7 +52,7 @@ class OptionSet(MutableMapping):
         if dict:
             self.from_dict(dict)
 
-    def _set_site(self, site, module: str, param: str,
+    def _set_site(self, site: Any, module: str, param: str,
                   clear_invalid: bool = False):
         """Set the site and valid names.
 
@@ -91,7 +91,7 @@ class OptionSet(MutableMapping):
                                '"{}"'.format('", "'.join(invalid_names)))
         self._site_set = True
 
-    def from_dict(self, dictionary):
+    def from_dict(self, dictionary: dict):
         """
         Load options from the dict.
 
@@ -128,7 +128,7 @@ class OptionSet(MutableMapping):
         self._enabled = enabled | (self._enabled - disabled - removed)
         self._disabled = disabled | (self._disabled - enabled - removed)
 
-    def __setitem__(self, name, value):
+    def __setitem__(self, name: str, value: Any):
         """Set option to enabled, disabled or neither."""
         if value is True:
             if self._site_set and name not in self._valid_enable:
@@ -149,7 +149,7 @@ class OptionSet(MutableMapping):
         else:
             raise ValueError(f'Invalid value "{value}"')
 
-    def __getitem__(self, name) -> Optional[bool]:
+    def __getitem__(self, name: str) -> Optional[bool]:
         """
         Return whether the option is enabled.
 
@@ -167,7 +167,7 @@ class OptionSet(MutableMapping):
             return None
         raise KeyError(f'Invalid name "{name}"')
 
-    def __delitem__(self, name) -> None:
+    def __delitem__(self, name: str) -> None:
         """Remove the item by setting it to None."""
         self[name] = None
 
