@@ -303,7 +303,7 @@ def deprecated(*args, **kwargs):
     return decorator
 
 
-def deprecate_arg(old_arg: str, new_arg: Union[str, None, bool]):
+def deprecate_arg(old_arg: str, new_arg: Union[str, None, bool]) -> callable:
     """Decorator to declare old_arg deprecated and replace it with new_arg.
 
     Usage:
@@ -636,7 +636,7 @@ class ModuleDeprecationWrapper(types.ModuleType):
         self.__dict__[attr] = value
         setattr(self._module, attr, value)
 
-    def __getattr__(self, attr):
+    def __getattr__(self, attr: str) -> Any:
         """Return the attribute with a deprecation warning if required."""
         if attr in self._deprecated:
             name, repl, message, future = self._deprecated[attr]
