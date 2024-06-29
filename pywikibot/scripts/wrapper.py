@@ -121,10 +121,10 @@ def run_python_file(filename: str, args: list[str], package=None):
     :type package: Optional[module]
     """
     # Create a module to serve as __main__
-    old_main_mod = sys.modules['__main__']
+    old_main_mod = sys.modules["__main__"]
     main_mod = types.ModuleType('__main__')
     sys.modules['__main__'] = main_mod
-    main_mod.__file__ = filename
+    main_mod.__file__=filename
     main_mod.__builtins__ = sys.modules['builtins']
     if package:
         main_mod.__package__ = package.__name__
