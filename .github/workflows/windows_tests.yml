@@ -1,5 +1,5 @@
 name: Windows Tests
-# Successor for Appveyor Tests
+# Successor for Appveyor Tests :-)
 
 on:
   push:
