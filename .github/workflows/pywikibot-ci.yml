@@ -15,6 +15,7 @@ env:
   PYWIKIBOT_TEST_RUNNING: 1
   PYWIKIBOT_USERNAME: Pywikibot-test
   PYWIKIBOT_TEST_GUI: 1
+  DISPLAY: mymachine.com:0.0
 
 jobs:
   build:
