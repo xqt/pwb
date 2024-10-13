@@ -15,7 +15,6 @@ env:
   PYWIKIBOT_TEST_RUNNING: 1
   PYWIKIBOT_USERNAME: Pywikibot-test
   PYWIKIBOT_TEST_GUI: 1
-  DISPLAY: :0.0
 
 jobs:
   build:
@@ -57,6 +56,7 @@ jobs:
         if [ -f dev-requirements.txt ]; then pip install -r dev-requirements.txt; fi
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
         pip install wikitextparser
+        pip install pytest-xvfb
 
     - name: Install setuptools
       if: ${{ (matrix.python-version >= '3.12') || (matrix.os == 'macOS-latest') }}
