@@ -27,7 +27,7 @@ jobs:
 
       matrix:
         python-version: [ "3.7", "3.13" ]
-        site: [ "wikipedia:en", "wikipedia:test" ]
+        site: [ "wikipedia:en", "wikisource:zh", "wikipedia:test" ]
 
     steps:
     - name: Checkout Repository
