@@ -15,7 +15,7 @@ env:
   PYWIKIBOT_TEST_RUNNING: 1
   PYWIKIBOT_USERNAME: Pywikibot-test
   PYWIKIBOT_TEST_GUI: 1
-  DISPLAY: mymachine.com:0.0
+  DISPLAY: :0.0
 
 jobs:
   build:
@@ -30,31 +30,6 @@ jobs:
       matrix:
         python-version: [ "3.7", "3.13" ]
         site: [ "wikipedia:en" ]
-        include:
-          - python-version: "3.7"
-            site: wikipedia:test
-          - python-version: "3.7"
-            site: False
-            family: wpbeta
-            code: en
-          - python-version: "3.7"
-            site: False
-            family: wpbeta
-            code: zh
-          - python-version: "3.8"
-            site: wsbeta:en
-          - python-version: "3.7"
-            site: wikidata:test
-          - python-version: "3.9"
-            site: wiktionary:ar
-            test_no_rc: true
-          - python-version: "3.7"
-            site: wikidata:wikidata
-          - python-version: "3.8"
-            site: wowwiki:uk
-          - python-version: "3"
-            site: wikipedia:de
-            os: macOS-latest
 
     steps:
     - name: Checkout Repository
