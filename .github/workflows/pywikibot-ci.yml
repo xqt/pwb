@@ -92,7 +92,7 @@ jobs:
         uses: actions/cache/restore@v4
         id: venv-cache
         with:
-          key: venv-${{ runner.os }}-${{ steps.setup_python.outputs.python-version }}-${{ hashFiles('requirements.txt', 'dev-requirements.txt') }}
+          key: venv-${{ runner.os }}-${{ matrix.python-version }}-${{ hashFiles('requirements.txt', 'dev-requirements.txt') }}
           path: .venv
 
       - name: Create virtualenv and install dependencies
@@ -103,7 +103,13 @@ jobs:
           if [ -f dev-requirements.txt ]; then .venv/bin/pip install -r dev-requirements.txt; fi
           if [ -f requirements.txt ]; then .venv/bin/pip install -r requirements.txt; fi
           .venv/bin/pip install wikitextparser
-
+          
+      - name: Install setuptools
+        if: steps.venv-cache.outputs.cache-hit != 'true' || ${{ (matrix.python-version >= '3.12') || (matrix.os == 'macOS-latest') }}
+        run: |
+          python -m venv .venv
+          .venv/bin/python -m pip install setuptools
+  
       - name: Activate virtualenv
         run: |
           echo ".venv/bin" >> $GITHUB_PATH
@@ -111,7 +117,7 @@ jobs:
       - name: Save virtualenv to cache
         uses: actions/cache/save@v4
         with:
-          key: venv-${{ runner.os }}-${{ steps.setup_python.outputs.python-version }}-${{ hashFiles('requirements.txt', 'dev-requirements.txt') }}
+          key: venv-${{ runner.os }}-${{ matrix.python-version }}-${{ hashFiles('requirements.txt', 'dev-requirements.txt') }}
           path: .venv
 
       - name: Generate family files
