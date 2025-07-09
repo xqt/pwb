@@ -114,14 +114,34 @@ jobs:
           key: venv-${{ runner.os }}-${{ steps.setup_python.outputs.python-version }}-${{ hashFiles('requirements.txt', 'dev-requirements.txt') }}
           path: .venv
 
-      # Continue your existing steps...
       - name: Generate family files
         run: |
-          # (your existing conditional commands)
-      
+          if [ ${{matrix.site}} != false ]; then
+            python -Werror::UserWarning -m pwb generate_user_files -site:${{matrix.site}} -user:${{ env.PYWIKIBOT_USERNAME }} -v -debug;
+          else
+            python -Werror::UserWarning -m pwb generate_user_files -family:${{matrix.family}} -lang:${{matrix.code}} -user:${{ env.PYWIKIBOT_USERNAME }} -v -debug;
+          fi
+          echo "usernames['wikipedia']['en'] = '${{ env.PYWIKIBOT_USERNAME }}'" >> user-config.py
+          echo "usernames['wikisource']['zh'] = '${{ env.PYWIKIBOT_USERNAME }}'" >> user-config.py
+          echo "usernames['wikipedia']['test'] = '${{ env.PYWIKIBOT_USERNAME }}'" >> user-config.py
+          echo "usernames['wikidata']['test'] = '${{ env.PYWIKIBOT_USERNAME }}'" >> user-config.py
+          echo "usernames['commons']['commons'] = '${{ env.PYWIKIBOT_USERNAME }}'" >> user-config.py
+          echo "usernames['meta']['meta'] = '${{ env.PYWIKIBOT_USERNAME }}'" >> user-config.py
+          echo "noisysleep = float('inf')" >> user-config.py
+          echo "maximum_GET_length = 5000" >> user-config.py
+          echo "console_encoding = 'utf8'" >> user-config.py
+          echo "import os" >> user-config.py
+          echo "password_file = os.path.expanduser('passwordfile')" >> user-config.py
+          echo "('${{ env.PYWIKIBOT_USERNAME }}', '${{ secrets.PYWIKIBOT_USERPWD }}')" > passwordfile
+
       - name: Generate user files
         run: |
-          # (your existing user generation commands)
+          if  [ ${{matrix.family || 0}} == wpbeta ]; then
+            python pwb.py generate_family_file http://${{matrix.code}}.wikipedia.beta.wmflabs.org/ wpbeta y
+          fi
+          if [ ${{matrix.site || 0}} == 'wsbeta:en' ]; then
+            python pwb.py generate_family_file http://en.wikisource.beta.wmflabs.org/ wsbeta y
+          fi
       
       - name: Test with unittest or pytest
         id: ci_test
