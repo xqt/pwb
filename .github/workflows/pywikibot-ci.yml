@@ -122,6 +122,15 @@ jobs:
 
       - name: Generate family files
         run: |
+          if  [ ${{matrix.family || 0}} == wpbeta ]; then
+            python pwb.py generate_family_file http://${{matrix.code}}.wikipedia.beta.wmflabs.org/ wpbeta y
+          fi
+          if [ ${{matrix.site || 0}} == 'wsbeta:en' ]; then
+            python pwb.py generate_family_file http://en.wikisource.beta.wmflabs.org/ wsbeta y
+          fi
+    
+      - name: Generate user files
+        run: |
           if [ ${{matrix.site}} != false ]; then
             python -Werror::UserWarning -m pwb generate_user_files -site:${{matrix.site}} -user:${{ env.PYWIKIBOT_USERNAME }} -v -debug;
           else
@@ -139,15 +148,6 @@ jobs:
           echo "import os" >> user-config.py
           echo "password_file = os.path.expanduser('passwordfile')" >> user-config.py
           echo "('${{ env.PYWIKIBOT_USERNAME }}', '${{ secrets.PYWIKIBOT_USERPWD }}')" > passwordfile
-
-      - name: Generate user files
-        run: |
-          if  [ ${{matrix.family || 0}} == wpbeta ]; then
-            python pwb.py generate_family_file http://${{matrix.code}}.wikipedia.beta.wmflabs.org/ wpbeta y
-          fi
-          if [ ${{matrix.site || 0}} == 'wsbeta:en' ]; then
-            python pwb.py generate_family_file http://en.wikisource.beta.wmflabs.org/ wsbeta y
-          fi
       
       - name: Test with unittest or pytest
         id: ci_test
