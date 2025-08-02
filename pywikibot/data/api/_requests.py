@@ -44,6 +44,12 @@ from pywikibot.tools import deprecated
 
 __all__ = ('CachedRequest', 'Request', 'encode_url')
 
+TEST_RUNNING = os.environ.get('PYWIKIBOT_TEST_RUNNING', '0') == '1'
+
+if TEST_RUNNING:
+    from unittest import SkipTest
+    from tests import unittest_print
+
 # Actions that imply database updates on the server, used for various
 # things like throttling or skipping actions when we're in simulation
 # mode
@@ -753,8 +759,14 @@ Status code: {response.status_code}
 The text message is:
 {text}
 """
-            print(msg)
-
+            if TEST_RUNNING:
+                if response.status_code == 402 \
+                   and 'Requests from your IP have been blocked' in text:
+                    raise SkipTest(msg)  # T399367
+                
+                unittest_print(msg)
+                    
+                
             # Do not retry for AutoFamily but raise a SiteDefinitionError
             # Note: family.AutoFamily is a function to create that class
             if self.site.family.__class__.__name__ == 'AutoFamily':
@@ -994,8 +1006,6 @@ but {scheme!r} is required. Please add the following code to your family file:
 
         :return: a dict containing data retrieved from api.php
         """
-        test_running = os.environ.get('PYWIKIBOT_TEST_RUNNING', '0') == '1'
-
         self._add_defaults()
         use_get = self._use_get()
         retries = 0
@@ -1140,8 +1150,7 @@ but {scheme!r} is required. Please add the following code to your family file:
                 param_repr = str(self._params)
                 msg = (f'API Error: query=\n{pprint.pformat(param_repr)}\n'
                        f'           response=\n{result}')
-                if test_running:
-                    from tests import unittest_print
+                if TEST_RUNNING:
                     unittest_print(msg)
                 else:
                     pywikibot.log(msg)
@@ -1151,9 +1160,8 @@ but {scheme!r} is required. Please add the following code to your family file:
                 raise RuntimeError(result)
 
         msg = 'Maximum retries attempted due to maxlag without success.'
-        if test_running:
-            import unittest
-            raise unittest.SkipTest(msg)
+        if TEST_RUNNING:
+            raise SkipTest(msg)
 
         raise MaxlagTimeoutError(msg)
 
