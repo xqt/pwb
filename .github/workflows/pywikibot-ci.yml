@@ -97,7 +97,7 @@ jobs:
           PYWIKIBOT_TEST_MODULES: deletionbot,file,site
         run: |
           python pwb.py version
-          python -m unittest -v
+          coverage run -m unittest -vv
       - name: Show coverage statistics
         run: |
           coverage report
