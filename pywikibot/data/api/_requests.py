@@ -48,6 +48,7 @@ TEST_RUNNING = os.environ.get('PYWIKIBOT_TEST_RUNNING', '0') == '1'
 
 if TEST_RUNNING:
     from unittest import SkipTest
+
     from tests import unittest_print
 
 # Actions that imply database updates on the server, used for various
@@ -763,10 +764,9 @@ The text message is:
                 if response.status_code == 402 \
                    and 'Requests from your IP have been blocked' in text:
                     raise SkipTest(msg)  # T399367
-                
+
                 unittest_print(msg)
-                    
-                
+
             # Do not retry for AutoFamily but raise a SiteDefinitionError
             # Note: family.AutoFamily is a function to create that class
             if self.site.family.__class__.__name__ == 'AutoFamily':
