@@ -753,6 +753,7 @@ Status code: {response.status_code}
 The text message is:
 {text}
 """
+            print(msg)
 
             # Do not retry for AutoFamily but raise a SiteDefinitionError
             # Note: family.AutoFamily is a function to create that class
