@@ -45,9 +45,6 @@ class TestPartiallyQualifiedLinkDifferentCodeParser(LinkTestCase):
         self.assertEqual(link.title, 'Main Page')
         self.assertEqual(link.namespace, 1)
 
-
-@unittest.skipIf(os.environ.get('GITHUB_ACTIONS'),
-                 'Tests blocked on twn, see T403292')
 class TestInterwikiLinksToNonLocalSites(TestCase):
 
     """Tests for interwiki links to non local sites."""
