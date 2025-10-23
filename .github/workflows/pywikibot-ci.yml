@@ -25,7 +25,7 @@ jobs:
       fail-fast: false
       max-parallel: 19
       matrix:
-        python-version: [3.13t]
+        python-version: ["3.13", 3.13t, pypy3.11, graalpy-24.0, 3.15-dev]
         site: ['wikipedia:en', 'wikisource:zh']
 
     steps:
@@ -35,16 +35,9 @@ jobs:
           submodules: true
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v6
-        if: "!endsWith(matrix.python-version, '-dev')"
         with:
           python-version: ${{ matrix.python-version }}
-
-      # use deadsnakes/action for development releases
-      - name: Set up development Python ${{ matrix.python-version }}
-        uses: deadsnakes/action@v3.2.0
-        if: endsWith(matrix.python-version, '-dev')
-        with:
-          python-version: ${{ matrix.python-version }}
+          allow-prereleases: true
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
