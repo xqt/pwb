@@ -350,13 +350,12 @@ def package_versions(
             info['path'] = path
             if path in paths:
                 print(
-                    f'Path {path} of the package {name} is already in defined paths as '
+                    f'### Path {path} of the package {name} is already in defined paths as '
                     f'{paths[path]}'
                 )
                 print(paths)
 
             paths[path] = name
-            print('###', path, paths)
 
         if '__version__' in package.__dict__:
             info['ver'] = package.__version__
