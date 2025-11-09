@@ -353,6 +353,7 @@ def package_versions(
                     f'### Path {path} of the package {name} is already in defined paths as '
                     f'{paths[path]}'
                 )
+                print(info)
                 print(paths)
 
             paths[path] = name
