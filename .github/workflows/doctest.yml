@@ -67,7 +67,7 @@ jobs:
           python -Werror::UserWarning -m pwb generate_user_files
             -site:wikipedia:test
             -user:${{ env.PYWIKIBOT_USERNAME }}
-            -v -debug
+            -v -debug ;
       - name: doctest with pytest
         id: ci_test
         continue-on-error: true
