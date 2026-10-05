@@ -33,44 +33,12 @@ jobs:
           # Keep PyPy 3.11 on the 7.x series until Pillow provides pp80 wheels.
           - pypy3.11-v7.x
           - '3.9'
-          - '3.10'
-          - '3.11'
-          - '3.12'
-          - '3.13'
           - '3.14'
         site: ['wikipedia:en', 'wikisource:zh']
         include:
-          - python-version: '3.9'
+          - python-version: 3.16-dev
             site: wikipedia:test
-          - python-version: '3.9'
-            site: betawikipedia:en
-          - python-version: '3.9'
-            site: betawikipedia:zh
-          - python-version: '3.10'
-            site: betawikisource:en
-          - python-version: '3.9'
-            site: wikidata:test
-          - python-version: '3.11'
-            site: wiktionary:ar
-            test_no_rc: true
-          - python-version: '3.9'
-            site: wikidata:wikidata
-          - python-version: '3.10'
-            site: wowwiki:uk
-          - python-version: '3'
-            site: wikipedia:de
-            os: macOS-latest
-          - python-version: 3.13t
-            site: wikipedia:test
-          - python-version: 3.14t
-            site: wikipedia:test
-          # ubuntu-22.04 required 3.15-dev due to T382214
-          - python-version: 3.15-dev
-            site: wikipedia:en
-            os: ubuntu-22.04
-          - python-version: 3.15-dev
-            site: wikisource:zh
-            os: ubuntu-22.04
+            experimental: true
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v7
@@ -79,9 +47,15 @@ jobs:
           persist-credentials: false
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v7
+        if: matrix.python-version == '3.16-dev'
         with:
           python-version: ${{ matrix.python-version }}
           allow-prereleases: ${{ endsWith(matrix.python-version, '-dev') }}
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: deadsnakes/action@v3.2.0
+        if: matrix.python-version == '3.16-dev'
+        with:
+          python-version: ${{ matrix.python-version }}
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
