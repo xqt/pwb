@@ -33,7 +33,7 @@ jobs:
           - pypy3.9
           - pypy3.10
           # Keep PyPy 3.11 on the 7.x series until Pillow provides pp80 wheels.
-          - pypy3.11-v7.x
+          - pypy3.11
         site: ['wikipedia:en', 'wikisource:zh']
     steps:
       - name: Checkout Repository
